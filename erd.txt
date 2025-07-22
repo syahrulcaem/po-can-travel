@@ -1,0 +1,137 @@
+// PO Can Travel - Bus Booking System ERD
+// Generated from Laravel Migrations
+// Copy this to https://dbdiagram.io/d
+
+Table users {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  email varchar(255) [unique, not null]
+  email_verified_at timestamp [null]
+  password varchar(255) [not null]
+  remember_token varchar(100) [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table admins {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  email varchar(255) [unique, not null]
+  email_verified_at timestamp [null]
+  password varchar(255) [not null]
+  remember_token varchar(100) [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table buses {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  plate_number varchar(255) [unique, not null]
+  capacity int [not null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table routes {
+  id bigint [pk, increment]
+  origin varchar(255) [not null]
+  destination varchar(255) [not null]
+  distance int [not null, note: 'Distance in kilometers']
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table schedules {
+  id bigint [pk, increment]
+  bus_id bigint [ref: > buses.id, not null]
+  route_id bigint [ref: > routes.id, not null]
+  departure_time datetime [not null]
+  arrival_time datetime [not null]
+  price decimal(10,2) [not null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table orders {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null]
+  order_date datetime [not null]
+  status enum('pending', 'confirmed', 'cancelled', 'completed') [default: 'pending']
+  canceled_at timestamp [null]
+  total_amount decimal(10,2) [not null]
+  cancellation_reason text [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+}
+
+Table tickets {
+  id bigint [pk, increment]
+  order_id bigint [ref: > orders.id, not null]
+  schedule_id bigint [ref: > schedules.id, not null]
+  seat_number varchar(255) [not null]
+  price decimal(10,2) [not null]
+  status enum('active', 'cancelled', 'used') [default: 'active']
+  canceled_at timestamp [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (schedule_id, seat_number) [unique, name: 'unique_seat_per_schedule']
+  }
+}
+
+Table reviews {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null]
+  bus_id bigint [ref: > buses.id, not null]
+  rating int [not null, note: 'Rating 1-5']
+  comment text [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (user_id, bus_id) [unique, name: 'unique_review_per_user_bus']
+  }
+}
+
+Table password_reset_tokens {
+  email varchar(255) [pk]
+  token varchar(255) [not null]
+  created_at timestamp [null]
+}
+
+Table failed_jobs {
+  id bigint [pk, increment]
+  uuid varchar(255) [unique, not null]
+  connection text [not null]
+  queue text [not null]
+  payload longtext [not null]
+  exception longtext [not null]
+  failed_at timestamp [default: 'current_timestamp']
+}
+
+Table personal_access_tokens {
+  id bigint [pk, increment]
+  tokenable_type varchar(255) [not null]
+  tokenable_id bigint [not null]
+  name varchar(255) [not null]
+  token varchar(64) [unique, not null]
+  abilities text [null]
+  last_used_at timestamp [null]
+  expires_at timestamp [null]
+  created_at timestamp [null]
+  updated_at timestamp [null]
+  
+  indexes {
+    (tokenable_type, tokenable_id) [name: 'personal_access_tokens_tokenable']
+  }
+}
+
+// Relationships Summary:
+// - Users can have multiple Orders
+// - Orders can have multiple Tickets
+// - Schedules belong to Bus and Route
+// - Tickets belong to Order and Schedule
+// - Reviews belong to User and Bus
+// - Admin table is separate for authentication
