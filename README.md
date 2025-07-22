@@ -210,7 +210,7 @@ php artisan migrate:fresh --seed
 -   **Email**: user@example.com
 -   **Password**: password123
 
-## 📱 Fitur & Screenshots
+## 📱 Fitur
 
 ### User Interface
 
