@@ -85,7 +85,6 @@ Sistem menggunakan 8 tabel utama:
 -   PHP >= 8.1
 -   Composer
 -   MySQL >= 8.0
--   Node.js >= 16.x (untuk asset compilation)
 -   Git
 
 ## 📦 Instalasi
