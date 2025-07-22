@@ -202,7 +202,7 @@ php artisan migrate:fresh --seed
 
 -   **URL**: `/admin/login`
 -   **Email**: admin@po-can-travel.com
--   **Password**: password123
+-   **Password**: password
 
 ### User Account
 
