@@ -69,12 +69,6 @@ PO CAN Travel adalah platform pemesanan tiket bus yang efisien dan user-friendly
 
 ## 📊 ERD Database
 
-Generate ERD syntax untuk visualisasi di dbdiagram.io:
-
-```bash
-php artisan generate:erd --output=erd.txt
-```
-
 Sistem menggunakan 8 tabel utama:
 
 -   **users** - Data pengguna
@@ -99,19 +93,16 @@ Sistem menggunakan 8 tabel utama:
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/po-can-travel.git
+git clone https://github.com/syahrulcaem/po-can-travel.git
 cd po-can-travel
 ```
 
 ### 2. Install Dependencies
 
-```bash
+````bash
 # Install PHP dependencies
 composer install
 
-# Install JavaScript dependencies (opsional)
-npm install
-```
 
 ### 3. Environment Setup
 
@@ -121,7 +112,7 @@ cp .env.example .env
 
 # Generate application key
 php artisan key:generate
-```
+````
 
 ### 4. Database Setup
 
@@ -240,12 +231,6 @@ php artisan migrate:fresh --seed
 -   **Payment Confirmation**: Verifikasi bukti pembayaran
 
 ## 📚 Command Artisan
-
-### Generate ERD
-
-```bash
-php artisan generate:erd --output=erd.txt
-```
 
 ### Migration Commands
 
